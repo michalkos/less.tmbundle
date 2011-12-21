@@ -10,9 +10,13 @@ This bundle was forked from `appden/less.tmbundle` but has since been rewritten 
 
 <small>Rendered in the ["Hunch Dark dimmed" theme](http://github.com/rsms/workenv/blob/master/textmate/Hunch-Dark-dimmed.tmTheme)</small>
 
-## Compiling to CSS (⌘B)
+## Compiling to CSS (⌘S)
 
-Runs `lessc` on the current file, saving to the same file name with a .css extension (e.g. style.less => style.css). When there is `lessc: somefile.less` somewhere in the current file, that file is compiled instead.
+Runs `lessc` on the current file, saving to the same file name with a .css extension (e.g. style.less => style.css).
+
+Depencies of that .less file in the project directory will also be compiled (found by `@import` statements).
+
+Will **not** compile .less files that are .erb.less files.
 
 Compiling requires some version of `lessc` to be in your `PATH`.
 
@@ -20,6 +24,7 @@ Compiling requires some version of `lessc` to be in your `PATH`.
 
 * Rasmus Andersson <http://hunch.se/> rsms@github
 * Scott Kyle <http://appden.com/> appden@github
+* Michael Bianco <http://mabblog.com/> iloveitaly@github
 
 ## License (MIT)
 

@@ -5,9 +5,29 @@
 	<key>beforeRunningCommand</key>
 	<string>saveActiveFile</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
-file = STDIN.read[/lessc: ([^*])+\.less/, 1] || ENV["TM_FILEPATH"].chomp(File.extname(ENV["TM_FILEPATH"]))
-system("lessc --verbose \"#{file}.less\" \"#{file}.css\"")</string>
+	<string>#!/usr/bin/env bash
+
+compile_less()
+{
+	ORIGINAL_FILE="$1"
+	CSS_FILE=${ORIGINAL_FILE/less/css}
+	lessc ${ORIGINAL_FILE} ${CSS_FILE}
+
+	# remove file if empty
+	if [[ ! -s ${CSS_FILE} ]]; then
+		rm ${CSS_FILE} &amp;&gt; /dev/null
+	fi
+}
+
+if [[ ${TM_FILEPATH} == *.less &amp;&amp; ${TM_FILEPATH} != *.erb.less ]]; then
+  compile_less $TM_FILEPATH
+
+  LESS_FILE_NAME=`basename ${TM_FILEPATH}`
+  fgrep -r --include="*.less" --exclude="*.erb.less" LESS_FILE_NAME $TM_PROJECT_DIRECTORY | while read line; do
+    compile_less ${line%%:@import*}
+  done
+fi
+</string>
 	<key>input</key>
 	<string>document</string>
 	<key>keyEquivalent</key>

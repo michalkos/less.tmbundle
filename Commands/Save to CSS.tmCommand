@@ -24,7 +24,10 @@ if [[ ${TM_FILEPATH} == *.less &amp;&amp; ${TM_FILEPATH} != *.erb.less ]]; then
 
   LESS_FILE_NAME=`basename ${TM_FILEPATH}`
   fgrep -r --include="*.less" --exclude="*.erb.less" LESS_FILE_NAME $TM_PROJECT_DIRECTORY | while read line; do
-    compile_less ${line%%:@import*}
+	  # I always forget how bash string substitutions work
+	  # ${string%%substring}: Deletes longest match of $substring from back of $string.
+	  # http://tldp.org/LDP/abs/html/string-manipulation.html
+	  compile_less ${line%%:@import*}
   done
 fi
 </string>

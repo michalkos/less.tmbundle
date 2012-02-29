@@ -19,7 +19,7 @@ compile_less()
 	fi
 }
 
-if [[ ${TM_FILEPATH} == *.less &amp;&amp; ${TM_FILEPATH} != *.erb.less ]]; then
+if [[ ${TM_FILEPATH} == *.less &amp;&amp; ${TM_FILEPATH} != *.erb.less && ${TM_FILEPATH} != *assets/stylesheets/* ]]; then
   compile_less $TM_FILEPATH
 
   LESS_FILE_NAME=`basename ${TM_FILEPATH}`
